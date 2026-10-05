@@ -1,0 +1,27 @@
+name: Data Pipeline CI
+
+on:
+  push:
+    paths:
+      - 'data-pipeline/**'
+
+jobs:
+  test-data-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r data-pipeline/requirements.txt
+
+      - name: Run data pipeline tests
+        run: |
+          pytest data-pipeline/tests
